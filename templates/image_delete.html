@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="container mt-3">
+    <h1>Delete Image</h1>
+    <p>Are you sure you want to delete the following image?</p>
+    <p><strong>Title:</strong> {{ image.title }}</p>
+    <p><strong>Body:</strong> {{ image.body }}</p>
+    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-thumbnail">
+    <form action="{% url 'image_delete' image.id %}" method="post">
+      {% csrf_token %}
+      <button class="btn btn-danger mt-2" type="submit">Delete</button>
+      <a href="{% url 'image_list' %}" class="btn btn-secondary mt-2">Cancel</a>
+    </form>
+  </div>
+{% endblock content %}
