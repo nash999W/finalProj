@@ -2,25 +2,41 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-  <div class="container mt-3">
-    <h1>News Articles</h1>
-    <ul>
-      {% for image in images %}
-        <li>
-          <h3>{{ image.title }}</h3>
-          <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-thumbnail">
-          <p>{{ image.body }}</p>
+    <div class="container mt-3" style="font-family: 'Times New Roman', Times, serif;">
+        <h1>News Articles</h1>
+        <ul>
+            {% for image in images %}
+                <li class="image-item">
+                    <p style="font-size: 40px;"><strong>Title:</strong> {{ image.title }}</p>
+                    <p><strong>Posted by:</strong> {{ image.author.username }}</p>
 
-          <!-- Edit button and link -->
-          <a href="{% url 'image_edit' image.id %}" class="btn btn-primary">Edit</a>
+                    <!-- Check if the image object actually exists before attempting to display it -->
+                    {% if image.image %}
+                        <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-thumbnail" style="max-width: 500px; max-height: 500px;">
+                    {% else %}
+                        <p></p>
+                    {% endif %}
 
-          <!-- Delete button and link -->
-          <form action="{% url 'image_delete' image.id %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button class="btn btn-danger" type="submit">Delete</button>
-          </form>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+                    <p><strong>Article:</strong> {{ image.body }}</p>
+
+                    <!-- Edit button and link -->
+                    <a href="{% url 'image_edit' image.id %}" class="btn btn-primary">Edit</a>
+
+                    <!-- Delete button and link -->
+                    <form action="{% url 'image_delete' image.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <style>
+        .image-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 {% endblock content %}
