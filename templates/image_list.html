@@ -12,7 +12,7 @@
 
                     <!-- Check if the image object actually exists before attempting to display it -->
                     {% if image.image %}
-                        <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-thumbnail" style="max-width: 300px; max-height: 300px;">
+                        <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-thumbnail" style="max-width: 500px; max-height: 500px;">
                     {% else %}
                         <p></p>
                     {% endif %}

@@ -36,10 +36,10 @@ def image_edit_view(request, image_id):
         # Check if the logged in user is the author of the image
         if image.author != request.user:
             messages.error(request, "You Dont have Permission to edit this image.")
-            return redirect("home")
+            return redirect("image_list")
     except Image.author.RelatedObjectDoesNotExist:
         messages.error(request, "This image has no associated author.")
-        return redirect('home')
+        return redirect('image_list')
 
     if request.method == "POST":
         form = ImageForm(request.POST, request.FILES, instance=image)
@@ -58,10 +58,10 @@ def image_delete_view(request, image_id):
         # Check if the logged in user is the author of the image
         if image.author != request.user:
             messages.error(request, "You Dont have Permission to delete this image.")
-            return redirect('home')
+            return redirect('image_list')
     except Image.author.RelatedObjectDoesNotExist:
         messages.error(request, "This image has no associated author.")
-        return redirect('home')
+        return redirect('image_list')
 
     if request.method == "POST":
         image.delete()
