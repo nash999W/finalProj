@@ -6,15 +6,17 @@ from .forms import ImageForm
 from .models import Image
 from django.core.files.storage import default_storage
 
-
 class HomePageView(TemplateView):
     template_name = "home.html"
-
 
 class ImageListView(ListView):
     model = Image
     template_name = "image_list.html"
     context_object_name = "images"
+
+    def get_queryset(self):
+        # Order images by creation date in descending order
+        return Image.objects.all().order_by('-created_at')
 
 @login_required
 def image_upload_view(request):
@@ -27,7 +29,6 @@ def image_upload_view(request):
     else:
         form = ImageForm()
     return render(request, "upload.html", {"form": form})
-
 
 @login_required
 def image_edit_view(request, image_id):
